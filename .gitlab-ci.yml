@@ -1,0 +1,45 @@
+# DinD service is required for Testcontainers
+services:
+  - docker:18-dind
+
+cache:
+  key: maven
+  paths:
+    - .m2/repository
+
+variables:
+  SAST_JAVA_VERSION: 11
+  # We have no nodejs here
+  SAST_EXCLUDED_ANALYZERS: "eslint"
+  # Tell testcontainers that it can assume it will find docker
+  TESTCONTAINERS_CHECKS_DISABLE: "true"
+  # Tell testcontainers that it can reuse containers
+  TESTCONTAINERS_REUSE_ENABLED: "true"
+  # Tell maven to use the cache
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  # Instruct Testcontainers to use the daemon of DinD.
+  DOCKER_HOST: "tcp://docker:2375"
+  # Improve performance with overlayfs.
+  DOCKER_DRIVER: overlay2
+  # SPRING_PROFILES_ACTIVE: gitlab-ci
+
+stages:
+  - build
+  - deploy
+
+maven-build:
+  image: maven:3.6-openjdk-15
+  stage: build
+  script: "mvn -f pom.xml -DskipTests package -B"
+  artifacts:
+    paths:
+      - target/*.jar
+
+container:
+  image: maven:3.6-openjdk-15
+  stage: deploy
+  script: mvn package jib:build -DskipTests
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: manual
