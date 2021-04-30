@@ -19,7 +19,7 @@ public interface FahrtRepository extends CrudRepository<Fahrt, Long> {
 
 	List<Fahrt> findByAnkunftIsNull();
 
-	@Query("select f from Fahrt f where f.ruderer = ?1")
+	@Query("select distinct f from Fahrt f JOIN f.ruderer r where r = ?1")
 	List<Fahrt> findByRuderer(Person person);
 
 }

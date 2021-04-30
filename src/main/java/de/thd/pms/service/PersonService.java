@@ -58,7 +58,7 @@ public class PersonService {
 
 	public void delete(Long id) throws DaoException {
 		Person ruderer = personRepository.findById(id).get();
-		boolean keineFahrt = fahrtRepository.findByRuderer(ruderer ).isEmpty();
+		boolean keineFahrt = fahrtRepository.findByRuderer(ruderer).isEmpty();
 		if (keineFahrt) {
 			personRepository.deleteById(id);
 		} else {

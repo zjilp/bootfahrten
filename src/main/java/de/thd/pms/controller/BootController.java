@@ -134,7 +134,7 @@ public class BootController {
 	 * @return Success or error
 	 */
 	@Operation(summary = "Create or modify a boat")
-	@Parameter(name="boot", required = true)
+	@io.swagger.v3.oas.annotations.parameters.RequestBody(description="Das Boot was gespeichert werde soll")
 	@RequestMapping(value="/", method={RequestMethod.POST, RequestMethod.PUT})
 	@ResponseBody
 	public ResponseEntity<Boot> rest_save(
