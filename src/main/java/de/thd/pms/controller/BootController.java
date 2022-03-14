@@ -124,8 +124,8 @@ public class BootController {
 	@Operation(summary = "List all boats", description = "Mit dieser Methode können Sie die Liste von im System integrierten Booten laden.")
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Boot>> rest_list() {
-		return ResponseEntity.ok(bootService.findAll());
+	public List<Boot> rest_list() {
+		return bootService.findAll();
 	}
 
 	/**
