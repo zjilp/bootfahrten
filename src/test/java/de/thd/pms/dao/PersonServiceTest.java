@@ -1,13 +1,13 @@
 package de.thd.pms.dao;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import de.thd.pms.model.Person;
 import de.thd.pms.service.PersonService;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration("/test-application-context.xml")
 public class PersonServiceTest extends AbstractDataAccessTest {

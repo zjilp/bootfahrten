@@ -4,9 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,7 +22,7 @@ import de.thd.pms.service.DaoException;
 import de.thd.pms.service.FahrtService;
 import de.thd.pms.service.PersonService;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration("/test-application-context.xml")
 public class FahrtServiceTest extends AbstractDataAccessTest {
@@ -45,7 +46,7 @@ public class FahrtServiceTest extends AbstractDataAccessTest {
 		this.bootService = bootService;
 	}
 
-	@Before
+	@BeforeEach
 	public void before() {
 		try {
 			// create two persons
@@ -68,7 +69,7 @@ public class FahrtServiceTest extends AbstractDataAccessTest {
 		}
 	}
 	
-	@After
+	@AfterEach
 	public void after() {
 		try {
 			deleteFromTables(tables);

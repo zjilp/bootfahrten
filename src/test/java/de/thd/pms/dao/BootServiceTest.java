@@ -2,14 +2,14 @@ package de.thd.pms.dao;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import de.thd.pms.model.Boot;
 import de.thd.pms.service.BootService;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration("/test-application-context.xml")
 public class BootServiceTest extends AbstractDataAccessTest {
@@ -52,7 +52,7 @@ public class BootServiceTest extends AbstractDataAccessTest {
 		deleteFromTables(tables);
 		bootService.create("Deggendorf", 4, "Vierer");
 		int rows = countRowsInTable(tabellennameBoot);
-		assertEquals("Die DB muss eine Zeile enthalten", 1, rows);
+		assertEquals(1, rows, "Die DB muss eine Zeile enthalten");
 		// delete all rows from db table
 		deleteFromTables(tables);
 	}
