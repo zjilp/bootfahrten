@@ -18,7 +18,7 @@ variables:
   # Tell maven to use the cache
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
   # Instruct Testcontainers to use the daemon of DinD.
-  DOCKER_HOST: "tcp://docker:2375"
+  # DOCKER_HOST: "tcp://docker:2375"
   # Improve performance with overlayfs.
   DOCKER_DRIVER: overlay2
   # SPRING_PROFILES_ACTIVE: gitlab-ci
