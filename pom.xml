@@ -38,6 +38,21 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- Wenn sie eine andere Datenbank als h2 verwenden wollen hier einige Beispile -->
+
+		<!-- Hier Mysql -->
+		<!-- dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency -->
+
+		<!-- Hier Postgres -->
+		<!-- dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency -->
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
