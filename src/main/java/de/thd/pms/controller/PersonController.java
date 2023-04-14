@@ -2,14 +2,16 @@ package de.thd.pms.controller;
 
 import java.time.LocalDateTime;
 
+import de.thd.pms.model.Boot;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import de.thd.pms.model.Person;
@@ -18,6 +20,7 @@ import de.thd.pms.service.PersonService;
 
 @Controller
 @RequestMapping("/person")
+@Tag(name = "person", description = "Die Personapi")
 public class PersonController {
 	private static Logger log = LogManager.getLogger(PersonController.class);
 	@Autowired
@@ -90,4 +93,10 @@ public class PersonController {
 		return mv;
     }
 
+	@Operation(summary = "Get a person by id")
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Person> rest_get(@PathVariable Long id) {
+		return ResponseEntity.ok(personService.findById(id));
+	}
 }

@@ -1,5 +1,7 @@
 package de.thd.pms.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -17,6 +19,7 @@ public class Person {
 	@Id
 	@GeneratedValue
 	@Column(name = "pk_person")
+	@Schema(description = "Die ID der Person", example = "2")
 	private Long id;
 	private LocalDateTime created;
 	private String vorname;
