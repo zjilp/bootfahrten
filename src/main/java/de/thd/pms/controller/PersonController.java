@@ -1,6 +1,8 @@
 package de.thd.pms.controller;
 
+import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import de.thd.pms.model.Boot;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import de.thd.pms.model.Person;
 import de.thd.pms.service.DaoException;
 import de.thd.pms.service.PersonService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
 @RequestMapping("/person")
@@ -92,6 +95,51 @@ public class PersonController {
 		mv.setViewName("list-personen");
 		return mv;
     }
+
+	@Operation(summary = "List all people", description = "Mit dieser Methode können Sie die Liste von im System integrierten Personen laden.")
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Person> rest_list() {
+		return (List<Person>) personService.findAll();
+	}
+
+	/**
+	 * Create or modify a specific person
+	 * @param person The Person to create / modify
+	 * @return Success or error
+	 */
+	@Operation(summary = "Create or modify a person")
+	@io.swagger.v3.oas.annotations.parameters.RequestBody(description="Die Person, die gespeichert werden soll")
+	@RequestMapping(value="/", method={RequestMethod.POST, RequestMethod.PUT})
+	@ResponseBody
+	public ResponseEntity<Person> rest_save(
+			@RequestBody Person person
+	) {
+		// Wenn das Feld created der Instanz person null ist,
+		// dann wird das aktuelle Datum in dieses Feld geschrieben
+		if (person.getCreated() == null) {
+			person.setCreated(LocalDateTime.now());
+		}
+		Person p = personService.save(person);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(p.getId())
+				.toUri();
+
+		return ResponseEntity.created(uri).body(p);
+	}
+
+	@Operation(summary = "Delete a person by it's id")
+	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
+	@ResponseBody
+	public ResponseEntity<String> rest_delete(@PathVariable Long id) {
+		try {
+			personService.delete(id);
+			return ResponseEntity.ok("Deleted Person " + id);
+		} catch (DaoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
 
 	@Operation(summary = "Get a person by id")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)

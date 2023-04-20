@@ -21,9 +21,13 @@ public class Person {
 	@Column(name = "pk_person")
 	@Schema(description = "Die ID der Person", example = "2")
 	private Long id;
+	@Schema(description = "Wann die Person angelegt wurde", example = "2017-07-21T17:32:28Z")
 	private LocalDateTime created;
+	@Schema(description = "Vorname der Person", example = "Peter")
 	private String vorname;
+	@Schema(description = "Nachname der Person", example = "Meier")
 	private String nachname;
+	@Schema(description = "Telefonnummer der Person", example = "0991 12345")
 	private String telefon;
 
 	public Long getId() {
